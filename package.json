@@ -7,6 +7,9 @@
     "react-virtualized-list": "index.js"
   },
   "scripts": {
+    "build": "npm run build:pack && npm run build:demo",
+    "build:demo": "webpack --config webpack-demo.js",
+    "build:pack": "webpack --config webpack-pack.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,6 +34,8 @@
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "typescript": "^2.2.2",
+    "webpack": "^2.3.3"
   }
 }

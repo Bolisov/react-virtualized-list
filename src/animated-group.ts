@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import * as ReactTransitionGroup from "react-addons-transition-group";
-import { ObjectExtensions } from "virtualized-scroll-viewer-extensions";
+import { ObjectExtensions } from "./virtualized-scroll-viewer-extensions";
 
 const ANIMATION_APPEAR = "-appear";
 const ANIMATION_ENTER = "-enter";

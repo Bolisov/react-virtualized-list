@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { ScrollExtensions } from "virtualized-scroll-viewer-extensions";
+import { ScrollExtensions } from "./virtualized-scroll-viewer-extensions";
 
 function insideiOSWebView(): boolean {
     return !(<any> navigator).standalone && /(iPad)|(iPhone)/i.test(navigator.userAgent) && !/safari/i.test(navigator.userAgent);    

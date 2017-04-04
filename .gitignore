@@ -1,1 +1,3 @@
 node_modules/
+bin/demo.js*
+bin/main.js*
