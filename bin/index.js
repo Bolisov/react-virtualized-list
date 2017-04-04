@@ -1,19 +1,25 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 define("virtualized-scroll-viewer-extensions", ["require", "exports"], function (require, exports) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var ScrollExtensions;
     (function (ScrollExtensions) {
         var OVERFLOW_REGEX = /(auto|scroll)/;
         var NON_SCROLLABLE_ELEMENT_ATRIBUTE = "data-not-scrollable";
+        var ScrollDirection;
         (function (ScrollDirection) {
             ScrollDirection[ScrollDirection["Horizontal"] = 0] = "Horizontal";
             ScrollDirection[ScrollDirection["Vertical"] = 1] = "Vertical";
-        })(ScrollExtensions.ScrollDirection || (ScrollExtensions.ScrollDirection = {}));
-        var ScrollDirection = ScrollExtensions.ScrollDirection;
+        })(ScrollDirection = ScrollExtensions.ScrollDirection || (ScrollExtensions.ScrollDirection = {}));
         function getScrollHostInfo(element, excludeStaticParent) {
             if (element === null || element === undefined || element instanceof Document) {
                 return {
@@ -125,8 +131,9 @@ define("virtualized-scroll-viewer-extensions", ["require", "exports"], function 
         ObjectExtensions.assign = assign;
     })(ObjectExtensions = exports.ObjectExtensions || (exports.ObjectExtensions = {}));
 });
-define("animated-group", ["require", "exports", "react", "react-dom", "virtualized-scroll-viewer-extensions"], function (require, exports, React, ReactDOM, virtualized_scroll_viewer_extensions_1) {
+define("animated-group", ["require", "exports", "react", "react-dom", "react-addons-transition-group", "virtualized-scroll-viewer-extensions"], function (require, exports, React, ReactDOM, ReactTransitionGroup, virtualized_scroll_viewer_extensions_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var ANIMATION_APPEAR = "-appear";
     var ANIMATION_ENTER = "-enter";
     var ANIMATION_LEAVE = "-leave";
@@ -135,7 +142,7 @@ define("animated-group", ["require", "exports", "react", "react-dom", "virtualiz
     var AnimatedGroup = (function (_super) {
         __extends(AnimatedGroup, _super);
         function AnimatedGroup() {
-            _super.apply(this, arguments);
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         AnimatedGroup.prototype.getDefaultTransitionName = function () {
             return "";
@@ -155,7 +162,7 @@ define("animated-group", ["require", "exports", "react", "react-dom", "virtualiz
             return React.createElement(this.getAnimatedItem(), virtualized_scroll_viewer_extensions_1.ObjectExtensions.assign({}, child.props, childAttributes), child);
         };
         AnimatedGroup.prototype.render = function () {
-            return React.createElement(React.addons.TransitionGroup, virtualized_scroll_viewer_extensions_1.ObjectExtensions.assign({}, this.props, { childFactory: this.wrapChild.bind(this) }), this.props.children);
+            return React.createElement(ReactTransitionGroup, virtualized_scroll_viewer_extensions_1.ObjectExtensions.assign({}, this.props, { childFactory: this.wrapChild.bind(this) }), this.props.children);
         };
         return AnimatedGroup;
     }(React.Component));
@@ -163,8 +170,9 @@ define("animated-group", ["require", "exports", "react", "react-dom", "virtualiz
     var AnimatedItem = (function (_super) {
         __extends(AnimatedItem, _super);
         function AnimatedItem() {
-            _super.apply(this, arguments);
-            this.transitionTimeouts = [];
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.transitionTimeouts = [];
+            return _this;
         }
         AnimatedItem.prototype.getAnimationClassName = function (element) {
             return this.props.transitionName;
@@ -251,11 +259,12 @@ define("animated-group", ["require", "exports", "react", "react-dom", "virtualiz
 });
 define("animated-size-group", ["require", "exports", "animated-group"], function (require, exports, animated_group_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var PIXELS_UNIT = "px";
     var AnimatedSizeGroup = (function (_super) {
         __extends(AnimatedSizeGroup, _super);
         function AnimatedSizeGroup() {
-            _super.apply(this, arguments);
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         AnimatedSizeGroup.prototype.getAnimatedItem = function () {
             return AnimatedSizeItem;
@@ -266,7 +275,7 @@ define("animated-size-group", ["require", "exports", "animated-group"], function
     var AnimatedSizeItem = (function (_super) {
         __extends(AnimatedSizeItem, _super);
         function AnimatedSizeItem() {
-            _super.apply(this, arguments);
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         AnimatedSizeItem.prototype.isDisplayInline = function (style) {
             return style && style.display.indexOf("inline") === 0;
@@ -325,6 +334,7 @@ define("animated-size-group", ["require", "exports", "animated-group"], function
 });
 define("images", ["require", "exports"], function (require, exports) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     exports.Images = [
         "http://24.media.tumblr.com/tumblr_m3sdvsBdJU1qzzim1o1_500.jpg",
         "http://25.media.tumblr.com/tumblr_m1zlwpDjAh1qze0hyo1_1280.jpg",
@@ -380,6 +390,7 @@ define("images", ["require", "exports"], function (require, exports) {
 });
 define("virtualized-scroll-viewer", ["require", "exports", "react", "react-dom", "virtualized-scroll-viewer-extensions"], function (require, exports, React, ReactDOM, virtualized_scroll_viewer_extensions_2) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     function insideiOSWebView() {
         return !navigator.standalone && /(iPad)|(iPhone)/i.test(navigator.userAgent) && !/safari/i.test(navigator.userAgent);
     }
@@ -389,17 +400,17 @@ define("virtualized-scroll-viewer", ["require", "exports", "react", "react-dom",
     var FLEXBOX_DISPLAY = document.createElement("p").style.flex === undefined ? "-webkit-flex" : "flex";
     var DEFAULT_BUFFER_SIZE = 3;
     var BUFFER_MULTIPLIER = insideiOSWebView() ? 4 : 1;
-    var MIN_ITEM_SIZE = 20;
+    var MIN_ITEM_SIZE = 10;
     var VirtualizedScrollViewer = (function (_super) {
         __extends(VirtualizedScrollViewer, _super);
         function VirtualizedScrollViewer(props, context) {
-            _super.call(this, props, context);
-            this.scrollDirection = virtualized_scroll_viewer_extensions_2.ScrollExtensions.ScrollDirection.Vertical;
-            this.hasPendingPropertiesUpdate = false;
-            this.isScrollOngoing = false;
-            this.isComponentInitialized = false;
-            this.scrollHandler = this.handleScroll.bind(this);
-            this.state = {
+            var _this = _super.call(this, props, context) || this;
+            _this.scrollDirection = virtualized_scroll_viewer_extensions_2.ScrollExtensions.ScrollDirection.Vertical;
+            _this.hasPendingPropertiesUpdate = false;
+            _this.isScrollOngoing = false;
+            _this.isComponentInitialized = false;
+            _this.scrollHandler = _this.handleScroll.bind(_this);
+            _this.state = {
                 firstRenderedItemIndex: 0,
                 lastRenderedItemIndex: 1,
                 averageItemSize: 0,
@@ -407,6 +418,7 @@ define("virtualized-scroll-viewer", ["require", "exports", "react", "react-dom",
                 offScreenItemsCount: 0,
                 effectiveScrollOffset: Number.MIN_VALUE,
             };
+            return _this;
         }
         VirtualizedScrollViewer.prototype.getScrollHostInfo = function () {
             if (!this.scrollHostInfo) {
@@ -808,17 +820,48 @@ define("virtualized-scroll-viewer", ["require", "exports", "react", "react-dom",
             enumerable: true,
             configurable: true
         });
-        VirtualizedScrollViewer.prototype.setScrollOffset = function (x, y) {
-            var scrollInfo = this.getScrollInfo();
-            var scrollHost = scrollInfo.scrollHost;
-            var scrollX = this.getDimension(undefined, x);
-            var scrollY = this.getDimension(y, undefined);
-            var updateScroll = function () { virtualized_scroll_viewer_extensions_2.ScrollExtensions.setScrollOffset(scrollHost, scrollX, scrollY); };
+        VirtualizedScrollViewer.prototype.scrollToIndex = function (index) {
+            var _this = this;
+            this.internalSetScrollOffset(function () {
+                var scrollInfo = _this.getScrollInfo();
+                var scrollHost = scrollInfo.scrollHost;
+                var scrollOffset = _this.state.averageItemSize * index;
+                var firstVisibleItemOffset = scrollInfo.scrollOffset;
+                var needsScroll = false;
+                if (scrollOffset < firstVisibleItemOffset) {
+                    needsScroll = true;
+                }
+                else {
+                    var lastVisibleItemOffset = firstVisibleItemOffset + scrollInfo.viewportSize - _this.state.averageItemSize;
+                    if (scrollOffset > lastVisibleItemOffset) {
+                        scrollOffset = scrollOffset - (lastVisibleItemOffset - firstVisibleItemOffset);
+                        needsScroll = true;
+                    }
+                }
+                if (!needsScroll) {
+                    return;
+                }
+                var scrollX = _this.getDimension(undefined, scrollOffset);
+                var scrollY = _this.getDimension(scrollOffset, undefined);
+                virtualized_scroll_viewer_extensions_2.ScrollExtensions.setScrollOffset(scrollHost, scrollX, scrollY, false);
+            });
+        };
+        VirtualizedScrollViewer.prototype.scrollToOffset = function (x, y) {
+            var _this = this;
+            this.internalSetScrollOffset(function () {
+                var scrollInfo = _this.getScrollInfo();
+                var scrollHost = scrollInfo.scrollHost;
+                var scrollX = _this.getDimension(undefined, x);
+                var scrollY = _this.getDimension(y, undefined);
+                virtualized_scroll_viewer_extensions_2.ScrollExtensions.setScrollOffset(scrollHost, scrollX, scrollY);
+            });
+        };
+        VirtualizedScrollViewer.prototype.internalSetScrollOffset = function (setScroll) {
             if (this.isInitialized) {
-                updateScroll();
+                setScroll();
             }
             else {
-                this.setPendingScroll = updateScroll;
+                this.setPendingScroll = setScroll;
             }
         };
         VirtualizedScrollViewer.prototype.getItemsPlaceholdersImage = function (width, height) {
@@ -846,20 +889,24 @@ define("virtualized-scroll-viewer", ["require", "exports", "react", "react-dom",
 });
 define("virtualized-list", ["require", "exports", "react", "virtualized-scroll-viewer", "animated-size-group"], function (require, exports, React, virtualized_scroll_viewer_1, animated_size_group_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var SCROLL_VIEWER_COMPONENT_REF = "scrollViewer";
     var VirtualizedList = (function (_super) {
         __extends(VirtualizedList, _super);
         function VirtualizedList() {
-            _super.apply(this, arguments);
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         VirtualizedList.prototype.renderItem = function (index) {
             var even = index % 2 === 0;
             var className = "list-item " + (even ? "even" : "odd");
             var item = this.props.list[index];
-            return (React.createElement("div", {key: "i-" + index, className: className}, "Item ", item.index, React.createElement("img", {src: item.image})));
+            return (React.createElement("div", { key: "i-" + index, className: className },
+                "Item ",
+                item.index,
+                React.createElement("img", { src: item.image })));
         };
         VirtualizedList.prototype.componentDidMount = function () {
-            this.getScrollViewer().setScrollOffset(0, 1000);
+            this.getScrollViewer().scrollToOffset(0, 1000);
         };
         VirtualizedList.prototype.renderItems = function (startIndex, length) {
             var items = [];
@@ -891,10 +938,13 @@ define("virtualized-list", ["require", "exports", "react", "virtualized-scroll-v
         };
         VirtualizedList.prototype.render = function () {
             var _this = this;
-            return (React.createElement(virtualized_scroll_viewer_1.VirtualizedScrollViewer, {renderItems: function (start, length) { return _this.renderItems(start, length); }, renderWrapper: function (children) { return _this.createScrollViewerContainer(children); }, length: this.props.list.length, pageBufferSize: this.props.pageBufferSize, ref: SCROLL_VIEWER_COMPONENT_REF}));
+            return (React.createElement(virtualized_scroll_viewer_1.VirtualizedScrollViewer, { renderItems: function (start, length) { return _this.renderItems(start, length); }, renderWrapper: function (children) { return _this.createScrollViewerContainer(children); }, length: this.props.list.length, pageBufferSize: this.props.pageBufferSize, ref: SCROLL_VIEWER_COMPONENT_REF }));
         };
-        VirtualizedList.prototype.setScrollOffset = function (offset) {
-            this.getScrollViewer().setScrollOffset(undefined, offset);
+        VirtualizedList.prototype.scrollToOffset = function (offset) {
+            this.getScrollViewer().scrollToOffset(undefined, offset);
+        };
+        VirtualizedList.prototype.scrollToIndex = function (index) {
+            this.getScrollViewer().scrollToIndex(index);
         };
         return VirtualizedList;
     }(React.Component));
@@ -902,14 +952,16 @@ define("virtualized-list", ["require", "exports", "react", "virtualized-scroll-v
 });
 define("index", ["require", "exports", "react", "react-dom", "virtualized-list", "images"], function (require, exports, React, ReactDOM, virtualized_list_1, images_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var App = (function (_super) {
         __extends(App, _super);
         function App() {
-            _super.call(this);
-            this.state = {
+            var _this = _super.call(this) || this;
+            _this.state = {
                 items: 100,
                 pageBufferSize: 4
             };
+            return _this;
         }
         App.prototype.refresh = function () {
             this.setState({
@@ -919,7 +971,11 @@ define("index", ["require", "exports", "react", "react-dom", "virtualized-list",
         };
         App.prototype.setScroll = function () {
             var offset = parseInt(this.refs["scrollOffset"].value);
-            this.refs["list"].setScrollOffset(offset);
+            this.refs["list"].scrollToOffset(offset);
+        };
+        App.prototype.scrollToIndex = function () {
+            var offset = parseInt(this.refs["scrollToIndex"].value);
+            this.refs["list"].scrollToIndex(offset);
         };
         App.prototype.render = function () {
             var imagesCount = images_1.Images.length;
@@ -927,7 +983,26 @@ define("index", ["require", "exports", "react", "react-dom", "virtualized-list",
             for (var i = 0; i < this.state.items; i++) {
                 list.push({ image: images_1.Images[i % imagesCount], index: i });
             }
-            return (React.createElement("div", null, React.createElement("h1", null, "Virtualized list example"), React.createElement("br", null), React.createElement("input", {ref: "itemsCount", placeholder: "Number of items", defaultValue: this.state.items + ""}), React.createElement("button", {onClick: this.refresh.bind(this)}, "Set Items"), React.createElement("br", null), React.createElement("br", null), React.createElement("input", {ref: "pageBufferSize", placeholder: "Number extra invisible of items rendered", defaultValue: this.state.pageBufferSize + ""}), React.createElement("button", {onClick: this.refresh.bind(this)}, "Set Buffer Size"), React.createElement("br", null), React.createElement("br", null), React.createElement("input", {ref: "scrollOffset", placeholder: "Scroll offset", defaultValue: this.state.items + ""}), React.createElement("button", {onClick: this.setScroll.bind(this)}, "Set Scroll"), React.createElement("br", null), React.createElement("br", null), React.createElement(virtualized_list_1.VirtualizedList, {ref: "list", list: list, pageBufferSize: this.state.pageBufferSize})));
+            return (React.createElement("div", null,
+                React.createElement("h1", null, "Virtualized list example"),
+                React.createElement("br", null),
+                React.createElement("input", { ref: "itemsCount", placeholder: "Number of items", defaultValue: this.state.items + "" }),
+                React.createElement("button", { onClick: this.refresh.bind(this) }, "Set Items"),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("input", { ref: "pageBufferSize", placeholder: "Number extra invisible of items rendered", defaultValue: this.state.pageBufferSize + "" }),
+                React.createElement("button", { onClick: this.refresh.bind(this) }, "Set Buffer Size"),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("input", { ref: "scrollOffset", placeholder: "Scroll offset" }),
+                React.createElement("button", { onClick: this.setScroll.bind(this) }, "Set Scroll"),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement("input", { ref: "scrollToIndex", placeholder: "Scroll to index" }),
+                React.createElement("button", { onClick: this.scrollToIndex.bind(this) }, "Scroll to index"),
+                React.createElement("br", null),
+                React.createElement("br", null),
+                React.createElement(virtualized_list_1.VirtualizedList, { ref: "list", list: list, pageBufferSize: this.state.pageBufferSize })));
         };
         return App;
     }(React.Component));

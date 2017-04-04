@@ -1,5 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import * as ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import * as ReactTransitionGroup from "react-addons-transition-group";
 import { ObjectExtensions } from "virtualized-scroll-viewer-extensions";
 
 const ANIMATION_APPEAR = "-appear";
@@ -11,7 +13,7 @@ const TICK = 17; // same as CSS Transition group
 
 type TransitionCallback = (element: HTMLElement) => void;
 
-export interface IAnimatedAttributes extends React.HTMLProps<any>, React.TransitionGroupProps {
+export interface IAnimatedAttributes extends React.HTMLProps<{}>, React.TransitionGroupProps {
     shouldSuspendAnimations?: () => boolean;
     transitionName?: string;
     onEnter?: () => void;
@@ -47,7 +49,7 @@ export class AnimatedGroup extends React.Component<IAnimatedAttributes, any> {
 
     public render(): any {
         return React.createElement(
-            React.addons.TransitionGroup,
+            ReactTransitionGroup,
             ObjectExtensions.assign({}, this.props, { childFactory: this.wrapChild.bind(this) }), 
             this.props.children);
     }
