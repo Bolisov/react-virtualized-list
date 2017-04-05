@@ -1,0 +1,41 @@
+{
+  "name": "react-virtualized-list",
+  "version": "0.0.1-dev0",
+  "description": "virtualization for react list components",
+  "main": "bin/virtualized-scroll-viewer.js",
+  "bin": {
+    "react-virtualized-list": "index.js"
+  },
+  "scripts": {
+    "build": "npm run build:pack && npm run build:demo",
+    "build:demo": "webpack --config webpack-demo.js",
+    "build:pack": "webpack --config webpack-pack.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/outsystems/react-virtualized-list.git"
+  },
+  "keywords": [
+    "react",
+    "virtual",
+    "virtualized"
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/outsystems/react-virtualized-list/issues"
+  },
+  "homepage": "https://github.com/outsystems/react-virtualized-list#readme",
+  "devDependencies": {
+    "@types/react": "^15.0.21",
+    "@types/react-addons-css-transition-group": "^15.0.1",
+    "@types/react-addons-transition-group": "^0.14.19",
+    "@types/react-dom": "^0.14.23",
+    "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-addons-transition-group": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "typescript": "^2.2.2",
+    "webpack": "^2.3.3"
+  }
+}
