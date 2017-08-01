@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { ScrollExtensions } from "virtualized-scroll-viewer-extensions";
+import { ScrollExtensions } from "./virtualized-scroll-viewer-extensions";
 
 function insideiOSWebView(): boolean {
     return !(<any> navigator).standalone && /(iPad)|(iPhone)/i.test(navigator.userAgent) && !/safari/i.test(navigator.userAgent);    
@@ -179,7 +179,7 @@ export class VirtualizedScrollViewer extends React.Component<IScrollViewerProper
         }
     }
     
-    public setState(state: IScrollViewerState | ((prevState: IScrollViewerState, props: IScrollViewerProperties) => IScrollViewerState), 
+    public setState<K extends keyof IScrollViewerState>(state: Pick<IScrollViewerState, K> | ((prevState: IScrollViewerState, props: IScrollViewerProperties) => IScrollViewerState), 
                     callback?: () => any): void {
         // using set state callback instead of componentDidUpdate because when using transition group
         // removed nodes will still be present when component did update is called
@@ -200,7 +200,7 @@ export class VirtualizedScrollViewer extends React.Component<IScrollViewerProper
         if (this.setPendingScroll) {
             requestAnimationFrame(() => {
                 // execute inside raf to make sure scroll events are already attached 
-                if (!this.isDisposed) {
+                if (!this.isDisposed && this.setPendingScroll) {
                     this.setPendingScroll();
                     this.setPendingScroll = null;
                 }
